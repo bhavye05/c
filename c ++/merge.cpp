@@ -3,16 +3,16 @@ using namespace std;
 
 int main()
 {
-    int n1, n2, i, j;
+    int n1, n2;
 
     cout << "Enter size of first array: ";
     cin >> n1;
 
     int *a = new int[n1];
 
-    cout << "Enter first array: ";
+    cout << "Enter sorted first array: ";
 
-    for(i = 0; i < n1; i++)
+    for(int i = 0; i < n1; i++)
     {
         cin >> a[i];
     }
@@ -23,41 +23,49 @@ int main()
     int *b = new int[n2];
     int *c = new int[n1 + n2];
 
-    cout << "Enter second array: ";
+    cout << "Enter sorted second array: ";
 
-    for(i = 0; i < n2; i++)
+    for(int i = 0; i < n2; i++)
     {
         cin >> b[i];
     }
 
-    // Copy first array
-    for(i = 0; i < n1; i++)
-    {
-        c[i] = a[i];
-    }
+    int i = 0, j = 0, k = 0;
 
-    // Copy second array
-    for(j = 0; j < n2; j++)
+    // Merge arrays
+    while(i < n1 && j < n2)
     {
-        c[i] = b[j];
-        i++;
-    }
-
-    // Sort merged array
-    for(i = 0; i < n1 + n2; i++)
-    {
-        for(j = i + 1; j < n1 + n2; j++)
+        if(a[i] < b[j])
         {
-            if(c[i] > c[j])
-            {
-                int temp = c[i];
-                c[i] = c[j];
-                c[j] = temp;
-            }
+            c[k] = a[i];
+            i++;
         }
+        else
+        {
+            c[k] = b[j];
+            j++;
+        }
+
+        k++;
     }
 
-    cout << "Merged Array: ";
+    // Copy remaining elements of first array
+    while(i < n1)
+    {
+        c[k] = a[i];
+        i++;
+        k++;
+    }
+
+    // Copy remaining elements of second array
+    while(j < n2)
+    {
+        c[k] = b[j];
+        j++;
+        k++;
+    }
+
+    cout << "\nMerged Sorted Array: ";
 
     for(i = 0; i < n1 + n2; i++)
     {
