@@ -5,7 +5,6 @@ using namespace std;
 class Student
 {
 public:
-
     int rollno;
     string name;
     string sclass;
@@ -17,7 +16,15 @@ int main()
 {
     Student s[5];
 
+    // Open file for writing
     ofstream fout("student.txt");
+
+    // Check output file
+    if(!fout)
+    {
+        cout << "Error creating file";
+        return 0;
+    }
 
     // Store records
     for(int i = 0; i < 5; i++)
@@ -25,45 +32,63 @@ int main()
         cout << "\nEnter Roll No: ";
         cin >> s[i].rollno;
 
+        cin.ignore();
+
         cout << "Enter Name: ";
-        cin >> s[i].name;
+        getline(cin, s[i].name);
 
         cout << "Enter Class: ";
-        cin >> s[i].sclass;
+        getline(cin, s[i].sclass);
 
         cout << "Enter Year: ";
         cin >> s[i].year;
 
-        cout << "Enter Marks: ";
+        cout << "Enter Total Marks: ";
         cin >> s[i].marks;
 
-        fout << s[i].rollno << " "
-             << s[i].name << " "
-             << s[i].sclass << " "
-             << s[i].year << " "
-             << s[i].marks << endl;
+        cin.ignore();
+
+        // Write to file
+        fout << s[i].rollno << endl;
+        fout << s[i].name << endl;
+        fout << s[i].sclass << endl;
+        fout << s[i].year << endl;
+        fout << s[i].marks << endl;
     }
 
     fout.close();
 
+    // Open file for reading
     ifstream fin("student.txt");
 
-    cout << "\nStudent Records\n";
+    // Check input file
+    if(!fin)
+    {
+        cout << "Error opening file";
+        return 0;
+    }
+
+    cout << "\n\nStudent Records\n";
 
     // Read records
     for(int i = 0; i < 5; i++)
     {
-        fin >> s[i].rollno
-            >> s[i].name
-            >> s[i].sclass
-            >> s[i].year
-            >> s[i].marks;
+        fin >> s[i].rollno;
+        fin.ignore();
 
+        getline(fin, s[i].name);
+        getline(fin, s[i].sclass);
+
+        fin >> s[i].year;
+        fin >> s[i].marks;
+        fin.ignore();
+
+        // Display records
         cout << "\nRoll No: " << s[i].rollno;
         cout << "\nName: " << s[i].name;
         cout << "\nClass: " << s[i].sclass;
         cout << "\nYear: " << s[i].year;
-        cout << "\nMarks: " << s[i].marks << endl;
+        cout << "\nTotal Marks: " << s[i].marks << endl;
     }
 
     fin.close();
