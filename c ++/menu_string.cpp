@@ -1,10 +1,9 @@
 #include <iostream>
-#include <string>
 using namespace std;
 
 int main()
 {
-    string str1, str2;
+    char str1[100], str2[100], temp[200];
     int choice, len = 0;
 
     cout << "Enter first string: ";
@@ -26,7 +25,7 @@ int main()
 
     switch(choice)
     {
-        // Address
+        // Address of each character
         case 1:
 
             for(int i = 0; str1[i] != '\0'; i++)
@@ -37,19 +36,49 @@ int main()
 
             break;
 
-        // Concatenate
+        // Concatenate strings
         case 2:
+        {
+            int i = 0, j = 0;
 
-            str1 = str1 + str2;
+            while(str1[i] != '\0')
+            {
+                temp[i] = str1[i];
+                i++;
+            }
 
-            cout << "Concatenated String: " << str1;
+            while(str2[j] != '\0')
+            {
+                temp[i] = str2[j];
+                i++;
+                j++;
+            }
+
+            temp[i] = '\0';
+
+            cout << "Concatenated String: " << temp;
 
             break;
+        }
 
-        // Compare
+        // Compare strings
         case 3:
+        {
+            int i = 0;
+            int flag = 1;
 
-            if(str1 == str2)
+            while(str1[i] != '\0' || str2[i] != '\0')
+            {
+                if(str1[i] != str2[i])
+                {
+                    flag = 0;
+                    break;
+                }
+
+                i++;
+            }
+
+            if(flag == 1)
             {
                 cout << "Strings are equal";
             }
@@ -59,20 +88,25 @@ int main()
             }
 
             break;
+        }
 
-        // Length
+        // Length using pointers
         case 4:
+        {
+            char *p = str1;
 
-            while(str1[len] != '\0')
+            while(*p != '\0')
             {
                 len++;
+                p++;
             }
 
             cout << "Length = " << len;
 
             break;
+        }
 
-        // Uppercase
+        // Lowercase to uppercase
         case 5:
 
             for(int i = 0; str1[i] != '\0'; i++)
@@ -83,49 +117,62 @@ int main()
                 }
             }
 
-            for(int i = 0; str2[i] != '\0'; i++)
-            {
-                if(str2[i] >= 'a' && str2[i] <= 'z')
-                {
-                    str2[i] = str2[i] - 32;
-                }
-            }
-
-            cout << "First String: " << str1 << endl;
-            cout << "Second String: " << str2;
+            cout << "Uppercase String: " << str1;
 
             break;
 
-        // Reverse
+        // Reverse string
         case 6:
+        {
+            int i = 0;
 
-            len = 0;
-
-            while(str1[len] != '\0')
+            while(str1[i] != '\0')
             {
-                len++;
+                i++;
             }
 
             cout << "Reverse String: ";
 
-            for(int i = len - 1; i >= 0; i--)
+            for(int j = i - 1; j >= 0; j--)
             {
-                cout << str1[i];
+                cout << str1[j];
             }
 
             break;
+        }
 
-        // Insert
+        // Insert string
         case 7:
         {
-            int pos;
+            int pos, i, j, k = 0;
 
             cout << "Enter position: ";
             cin >> pos;
 
-            str1.insert(pos, str2);
+            // Copy before position
+            for(i = 0; i < pos; i++)
+            {
+                temp[k] = str1[i];
+                k++;
+            }
 
-            cout << "New String: " << str1;
+            // Insert second string
+            for(j = 0; str2[j] != '\0'; j++)
+            {
+                temp[k] = str2[j];
+                k++;
+            }
+
+            // Copy remaining first string
+            for(i = pos; str1[i] != '\0'; i++)
+            {
+                temp[k] = str1[i];
+                k++;
+            }
+
+            temp[k] = '\0';
+
+            cout << "New String: " << temp;
 
             break;
         }
